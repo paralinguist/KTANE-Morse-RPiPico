@@ -1,6 +1,6 @@
 import serial, time
 from bomb_network import BombServer
-port = "/dev/tty.usbmodem1101"
+port = "/dev/tty.usbmodem11101"
 #port = "/dev/tty.usbmodem14202"
 baud = 115200
 

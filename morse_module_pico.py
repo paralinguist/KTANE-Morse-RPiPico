@@ -22,6 +22,7 @@ tx_button = Pin(tx_pin, Pin.IN, Pin.PULL_UP)
 led = Pin(14, Pin.OUT)
 
 up_button_last = time.ticks_ms()
+down_button_last = time.ticks_ms()
 tx_button_last = time.ticks_ms()
 
 counter = 0
@@ -91,8 +92,9 @@ def display_disarmed():
   get_new_word()
 
 def button_handler(pin):
-  global up_button_last, tx_button_last, counter
+  global up_button_last, down_button_last, tx_button_last, counter
   if pin == up_button:
+    print("UP")
     if time.ticks_diff(time.ticks_ms(), up_button_last) > 250:
       counter += 1
       if counter >= len(FREQUENCIES):              
@@ -109,6 +111,7 @@ def button_handler(pin):
         print('S', end='')
       tx_button_last = time.ticks_ms()
   elif pin == down_button:
+    print("DWN")
     if time.ticks_diff(time.ticks_ms(), down_button_last) > 250:
       counter -= 1
       if counter < 0:              
@@ -137,6 +140,7 @@ led.value(0)
 get_new_word()
 
 up_button.irq(trigger = machine.Pin.IRQ_RISING, handler = button_handler)
+down_button.irq(trigger = machine.Pin.IRQ_RISING, handler = button_handler)
 tx_button.irq(trigger = machine.Pin.IRQ_RISING, handler = button_handler)
 serial_timer = Timer(period=3000, mode=Timer.PERIODIC, callback=lambda t:server_checkin())
 
