@@ -94,7 +94,6 @@ def display_disarmed():
 def button_handler(pin):
   global up_button_last, down_button_last, tx_button_last, counter
   if pin == up_button:
-    print("UP")
     if time.ticks_diff(time.ticks_ms(), up_button_last) > 250:
       counter += 1
       if counter >= len(FREQUENCIES):              
@@ -111,7 +110,6 @@ def button_handler(pin):
         print('S', end='')
       tx_button_last = time.ticks_ms()
   elif pin == down_button:
-    print("DWN")
     if time.ticks_diff(time.ticks_ms(), down_button_last) > 250:
       counter -= 1
       if counter < 0:              
